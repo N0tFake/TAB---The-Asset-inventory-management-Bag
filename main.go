@@ -1,7 +1,9 @@
 package main
 
 import (
-	"tab/controllers"
+	"log"
+	controllers "tab/controllers/Patrimony"
+	"tab/initializers"
 	"tab/service"
 
 	"github.com/gin-gonic/gin"
@@ -10,11 +12,22 @@ import (
 func main() {
 	r := gin.Default()
 
-	service.ConnectDatabase()
+	config, err := initializers.LoadConfig(".")
+
+	if err != nil {
+		log.Fatal("Error: ", err)
+	}
+
+	service.ConnectDatabase(&config)
 
 	r.GET("/", controllers.GetAllPatrimony)
-	r.POST("/patrimony", controllers.CreatePatrimony)
-	r.GET("/patrimony/:id", controllers.GetByIdPatrimony)
+	// r.POST("/patrimony", controllers.CreatePatrimony)
+	// r.GET("/patrimony/:id", controllers.GetByIdPatrimony)
+	// r.PATCH("/patrimony/update/:id", controllers.UpdatePatrimony)
+	// r.DELETE("/patrimony/delete/:id", controllers.DeletePatrimony)
 
-	r.Run()
+	err = r.Run()
+	if err != nil {
+		return
+	}
 }

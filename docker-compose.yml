@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./app.dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/go-TAB
+    depends_on:
+      - database
+    container_name: go-api-TAB
+    environment:
+      - 'DB_PORT=3306'
+      - 'DB_HOST=database'
+
+  database:
+    image: mysql:5.7.22
+    env_file:
+      - ./app.env
+    container_name: tab-db
+    ports:
+      - 3306:3306
+    volumes:
+      - tab-data:/var/lib/mysql
+
+volumes:
+  tab-data:
