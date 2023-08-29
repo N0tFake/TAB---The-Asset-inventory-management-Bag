@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 	"tab/initializers"
-	models "tab/models/Patrimony"
+	"tab/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -29,7 +29,7 @@ func ConnectDatabase(config *initializers.Config) {
 		panic("Error connecting to DB")
 	}
 
-	err = db.AutoMigrate(&models.Patrimony{})
+	err = db.AutoMigrate(&models.Sector, &models.Patrimony, &models.Category, &models.Conservation)
 	if err != nil {
 		panic("Error connecting to DB")
 	}

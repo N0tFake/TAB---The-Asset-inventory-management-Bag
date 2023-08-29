@@ -33,7 +33,7 @@ func CreatePatrimony(c *gin.Context) {
 		return
 	}
 
-	patrimony := models.Patrimony{Name: input.Name, Model: input.Model}
+	patrimony := models.Patrimony{Name: input.Name, ModelName: input.Model}
 	service.DB.Create(&patrimony)
 
 	c.JSON(http.StatusOK, gin.H{"data": patrimony})
